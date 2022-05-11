@@ -15,7 +15,7 @@ adc = machine.ADC(pin_pot)
 adcRangeLowerThreshhold = 400;
 adcRangeUpperThreshhold = 65536;
 
-microStepping = 16  # // 1/16 th micro stepping -> change switches/jumpers on driver board accordingly
+microStepping = 8  # // 1/16 th micro stepping -> change switches/jumpers on driver board accordingly
 stepperRevolutionSteps = 200  # 200 steps per revolution, 1.8 degrees
 stepsForFullTurn = 200 * microStepping
 interStepPauseFullRotationMicro = float(1000000.0) / float(stepsForFullTurn)  # Full rotation in 1 second
@@ -31,7 +31,7 @@ def core0_thread():
     interStepPause = 1000
     utime.sleep_ms(3000)
     pin_dir.value(1)
-    nSteps = 6000
+    nSteps = 4200
     pin_en.value(0)
     while True:
 
