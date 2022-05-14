@@ -1,9 +1,10 @@
 #!/usr/bin/python
 import machine
-import utime
 import _thread
-import gc
-gc.enable()
+
+from SeqBuffer import *
+from SeqRunner import *
+
 
 pin_led = machine.Pin(25, machine.Pin.OUT)
 pin_en = machine.Pin(19, machine.Pin.OUT)  # GP19 / 25 / Enable pin
@@ -86,6 +87,17 @@ def checkBounds(speedRatio):
 # create global lock
 lock = _thread.allocate_lock()
 
-worker_thread = _thread.start_new_thread(core1_thread, ())
-core0_thread()
+buf = SeqBuffer()
+print(buf)
+buf.appendsequence(50, 100)
+buf.appendsequence(30, 80)
+print(buf.lenthsequence())
+(nSteps, timeDeltaMs, direc) = buf.nextsequence()
+print(buf.lenthsequence())
+print(nSteps)
+print(timeDeltaMs)
+print(buf.lenthsequence())
+
+#worker_thread = _thread.start_new_thread(core1_thread, ())
+#core0_thread()
 
