@@ -59,7 +59,7 @@ def core1_thread():
         lock.acquire()
         interStepPause = threadInterchangeVar
         lock.release()
-        gc.collect() #possibliy _thread lib is leaking memory
+        gc.collect() #_thread lib is no triggering garbage collection
 
 
 def core0_thread():
