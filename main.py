@@ -24,17 +24,20 @@ interStepPauseFullRotationMicro = float(1000000.0) / float(stepsForFullTurn)  # 
 
 pulsDelta = 1
 
+
 def core1_thread():
     global lock
     global threadInterchangeVar
+    dirValue = 0
     threadInterchangeVar = 1000
     interStepPause = 1000
     utime.sleep_ms(3000)
-    pin_dir.value(0)
+    pin_dir.value(dirValue)
     nSteps = 2200
     pin_en.value(0)
     while True:
-        pin_dir.value(0)
+        dirValue = toggleOnOff(dirValue)
+        pin_dir.value(dirValue)
         utime.sleep_ms(100)
 
         for i in range(nSteps):
@@ -48,7 +51,8 @@ def core1_thread():
         lock.release()
 
         utime.sleep_ms(100)
-        pin_dir.value(1)
+        dirValue = toggleOnOff(dirValue)
+        pin_dir.value(dirValue)
 
         for i in range(nSteps):
             pin_step.value(1)
@@ -75,12 +79,22 @@ def core0_thread():
         utime.sleep_ms(250)
         gc.collect()
 
+
 def checkBounds(speedRatio):
     if (speedRatio < 0):
         return 0
     if (speedRatio >= adcRangeUpperThreshhold):
         return 1
     return round(speedRatio, 2)
+
+
+def toggleOnOff(value):
+    print("Dir={}".format(value))
+    if(value == 1):
+        return 0
+    if(value == 0):
+        return 1
+
 
 
 # create global lock
