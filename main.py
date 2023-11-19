@@ -38,11 +38,35 @@ def core1_thread():
     while True:
         dirValue = toggleOnOff(dirValue)
         pin_dir.value(dirValue)
-        utime.sleep_ms(100)
+        utime.sleep_ms(50)
 
-        for i in range(nSteps):
+        for i in range(200):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta*8)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(100):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta*4)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(nSteps-600):
             pin_step.value(1)
             utime.sleep_us(pulsDelta)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(100):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta * 4)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(200):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta*8)
             pin_step.value(0)
             utime.sleep_us(interStepPause)
 
@@ -50,13 +74,37 @@ def core1_thread():
         interStepPause = threadInterchangeVar
         lock.release()
 
-        utime.sleep_ms(100)
+        utime.sleep_ms(50)
         dirValue = toggleOnOff(dirValue)
         pin_dir.value(dirValue)
 
-        for i in range(nSteps):
+        for i in range(200):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta*8)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(100):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta*4)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(nSteps-600):
             pin_step.value(1)
             utime.sleep_us(pulsDelta)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(100):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta * 4)
+            pin_step.value(0)
+            utime.sleep_us(interStepPause)
+
+        for i in range(200):
+            pin_step.value(1)
+            utime.sleep_us(pulsDelta*8)
             pin_step.value(0)
             utime.sleep_us(interStepPause)
 
@@ -64,7 +112,6 @@ def core1_thread():
         interStepPause = threadInterchangeVar
         lock.release()
         gc.collect() #_thread lib is no triggering garbage collection
-
 
 def core0_thread():
     global lock
